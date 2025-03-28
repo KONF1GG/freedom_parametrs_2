@@ -1,0 +1,12 @@
+[project]
+name = "parametrs-second"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "aiohttp>=3.11.14",
+    "clickhouse-connect>=0.8.15",
+    "datetime>=5.5",
+    "python-dotenv>=1.1.0",
+]
