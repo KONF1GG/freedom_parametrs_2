@@ -132,6 +132,7 @@ async def upload_to_clickhouse_additional_data(data):
         ]
         column_names = ['prop', 'value', 'date']
         client.insert('grafana.indicators', rows, column_names=column_names)
+        logging.info('Успешно вставлены additional fields в indicators')
 
 async def main():
     '''
