@@ -8,9 +8,9 @@ import config
 import logging
 
 logging.basicConfig(
-    filename='/app/logs/script.log',
     level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[logging.StreamHandler()]
 )
 
 @contextlib.asynccontextmanager

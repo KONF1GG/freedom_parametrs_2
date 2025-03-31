@@ -4,9 +4,4 @@ services:
     build: .
     container_name: pars_data
     env_file:
-      - '.env'
-    volumes:
-      - ./logs:/app/logs
-
-volumes:
-  app_logs:  
+      - path: ./.env
