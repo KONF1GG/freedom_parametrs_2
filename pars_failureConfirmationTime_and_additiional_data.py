@@ -7,7 +7,6 @@ import json
 import config
 import logging
 
-# Настройка логирования
 logging.basicConfig(
     filename='script.log',
     level=logging.INFO,
@@ -79,18 +78,9 @@ async def fetch_data_with_semaphore(session, url, semaphore):
 
 async def upload_to_clickhouse_failureConfirmationTime(data):
     '''
-    Асинхронно выгрузить данные в ClickHouse в таблицу grafana.failureConfirmationTime,
-    вставляя только новые записи (по уникальному id).
+    Асинхронно выгрузить данные в ClickHouse в таблицу grafana.failureConfirmationTime
     '''
     async with clickhouse_session() as client:
-        # Получаем существующие id из таблицы
-        existing_ids = set(
-            row[0] for row in client.query(
-                'SELECT id FROM grafana.failureConfirmationTime'
-            ).result_rows
-        )
-
-        # Фильтруем данные, оставляем только те записи, которых нет в таблице
         rows = [
             (
                 item.get('id'),
@@ -101,15 +91,15 @@ async def upload_to_clickhouse_failureConfirmationTime(data):
                 item.get('importance')
             )
             for item in data
-            if item.get('id') not in existing_ids
         ]
 
-        if rows:  # Вставляем только если есть новые данные
+        if rows:
             column_names = ['id', 'name', 'openingDate', 'closingDate', 'confirmationDate', 'importance']
             client.insert('grafana.failureConfirmationTime', rows, column_names=column_names)
             logging.info(f"Вставлено {len(rows)} новых записей в grafana.failureConfirmationTime")
         else:
             logging.info("Нет новых записей для вставки в grafana.failureConfirmationTime")
+
 async def get_additional_data():
     '''
     Асинхронно получить дополнительные данные и выгрузить их в ClickHouse
@@ -158,5 +148,3 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-
-
