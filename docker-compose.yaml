@@ -1,0 +1,8 @@
+
+
+services:
+  app:
+    build: .
+    container_name: pars_data
+    env_file:
+      - '.env'
