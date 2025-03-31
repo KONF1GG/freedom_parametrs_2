@@ -8,7 +8,7 @@ import config
 import logging
 
 logging.basicConfig(
-    filename='script.log',
+    filename='/app/logs/script.log',
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
